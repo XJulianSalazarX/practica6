@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>imagenes/planet2.png</file>
+        <file>imagenes/planet3.png</file>
+        <file>imagenes/planet4.png</file>
+        <file>imagenes/planet5.png</file>
+        <file>imagenes/planet6.png</file>
+        <file>imagenes/space.png</file>
+        <file>imagenes/sun.png</file>
+    </qresource>
+</RCC>
