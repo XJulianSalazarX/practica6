@@ -139,11 +139,11 @@ void MainWindow::on_save_clicked()
     pos = planets.size()-1;
     planets[pos]->setMasa(ui->masa->value()/10);
     planets[pos]->setRadio(ui->radio->value()/10);
-    planets[pos]->setVelx(ui->velx->value()/10);
-    planets[pos]->setVely(ui->vely->value()/10);
+    planets[pos]->setVelx(ui->velx->value());
+    planets[pos]->setVely(ui->vely->value());
     planets[pos]->Tamanio();
     planets[pos]->setPosx(500+(ui->posx->value()/10)-planets[pos]->getRadio());
-    planets[pos]->setPosy(500+(ui->posy->value()/10)-planets[pos]->getRadio());
+    planets[pos]->setPosy(500-(ui->posy->value()/10)-planets[pos]->getRadio());
     scene->addItem(planets[pos]);
     planets[pos]->setPos(planets[pos]->getPosx(),planets[pos]->getPosy());
     //cerrar scena
@@ -200,7 +200,7 @@ void MainWindow::Invisible()
 }
 void MainWindow::on_play_clicked()
 {
-    timer->start(500);
+    timer->start(10);
 }
 
 void MainWindow::on_stop_clicked()
