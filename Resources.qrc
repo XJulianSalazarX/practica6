@@ -8,5 +8,6 @@
         <file>imagenes/space.png</file>
         <file>imagenes/sun.png</file>
         <file>imagenes/sol.png</file>
+        <file>imagenes/plano.png</file>
     </qresource>
 </RCC>

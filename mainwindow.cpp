@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMinimumSize(width(),height());
     this->setMaximumSize(width(),height());
     scene = new QGraphicsScene();
-    scene->setBackgroundBrush(QPixmap(":/imagenes/space.png").scaled(1000,1000));
+    scene->setBackgroundBrush(QPixmap(":/imagenes/plano.png").scaled(1000,1000));
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setFixedSize(1000,1000);
     ui->graphicsView->setSceneRect(0,0,1000,1000);
@@ -70,7 +70,7 @@ void MainWindow::Sun()
 {
     planets.push_back(new Planet(":/imagenes/sol.png"));
     planets[0]->setMasa(70000/10);
-    planets[0]->setRadio(200/10);
+    planets[0]->setRadio(300/10);
     planets[0]->setVelx(0);
     planets[0]->setVely(0);
     planets[0]->Tamanio();
@@ -82,10 +82,7 @@ void MainWindow::Sun()
 
 void MainWindow::mover()
 {
-    //Aceleracion();
-    qDebug() << "Entro en mover";
-    time += 0.1;
-    qDebug() << time;
+    Aceleracion();
     for(short pos=1;pos<planets.size();pos++){
         qDebug() << "Entro en el for";
         planets[pos]->setVelx(planets[pos]->getVelx()+(planets[pos]->getAc_x()*time));
@@ -140,7 +137,7 @@ void MainWindow::on_save_clicked()
     short pos;
     CreatePlanet();
     pos = planets.size()-1;
-    planets[pos]->setMasa(ui->masa->value());
+    planets[pos]->setMasa(ui->masa->value()/10);
     planets[pos]->setRadio(ui->radio->value()/10);
     planets[pos]->setVelx(ui->velx->value()/10);
     planets[pos]->setVely(ui->vely->value()/10);
@@ -203,7 +200,6 @@ void MainWindow::Invisible()
 }
 void MainWindow::on_play_clicked()
 {
-    qDebug() << "Entro en play";
     timer->start(500);
 }
 

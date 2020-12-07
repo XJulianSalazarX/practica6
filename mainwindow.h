@@ -32,7 +32,7 @@ private:
     QGraphicsScene *scene;
     QGraphicsScene *scene2;
     QList<Planet *> planets;
-    double time = 0;
+    double time = 1;
     QTimer *timer;
 
 public slots:
