@@ -1,8 +1,14 @@
 #include "planet.h"
 
-Planet::Planet(QString name)
+Planet::Planet(QString name_)
 {
-    setPixmap(QPixmap(name));
+    name = name_;
+    //setPixmap(QPixmap(name));
+}
+
+void Planet::Tamanio()
+{
+    setPixmap(QPixmap(name).scaled(radio*2,radio*2));
 }
 
 double Planet::getPosx() const
@@ -63,4 +69,29 @@ double Planet::getVely() const
 void Planet::setVely(double value)
 {
     vely = value;
+}
+
+QString Planet::getName() const
+{
+    return name;
+}
+
+double Planet::getAc_x() const
+{
+    return ac_x;
+}
+
+void Planet::setAc_x(double value)
+{
+    ac_x = value;
+}
+
+double Planet::getAc_y() const
+{
+    return ac_y;
+}
+
+void Planet::setAc_y(double value)
+{
+    ac_y = value;
 }

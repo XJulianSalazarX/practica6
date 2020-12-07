@@ -3,12 +3,15 @@
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsItem>
+#include <math.h>
 
 class Planet: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
     Planet(QString name);
+    void Tamanio();
     double getPosx() const;
     void setPosx(double value);
 
@@ -27,8 +30,16 @@ public:
     double getVely() const;
     void setVely(double value);
 
+    QString getName() const;
+
+    double getAc_x() const;
+    void setAc_x(double value);
+
+    double getAc_y() const;
+    void setAc_y(double value);
+
 private:
-    double posx,posy,masa,radio,velx,vely;
+    double posx,posy,masa,radio,velx,vely,ac_x=0,ac_y=0;
     QString name;
 };
 

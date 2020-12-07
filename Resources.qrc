@@ -7,5 +7,6 @@
         <file>imagenes/planet6.png</file>
         <file>imagenes/space.png</file>
         <file>imagenes/sun.png</file>
+        <file>imagenes/sol.png</file>
     </qresource>
 </RCC>
