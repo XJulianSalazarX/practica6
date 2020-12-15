@@ -39,7 +39,7 @@ public:
     void setAc_y(double value);
 
 private:
-    double posx,posy,masa,radio,velx,vely,ac_x=0,ac_y=0;
+    double x_inicial,y_inicial,posx,posy,masa,radio,velx,vely,ac_x=0,ac_y=0;
     QString name;
 };
 

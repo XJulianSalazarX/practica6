@@ -69,8 +69,8 @@ bool MainWindow::planetName(QString name)
 void MainWindow::Sun()
 {
     planets.push_back(new Planet(":/imagenes/sol.png"));
-    planets[0]->setMasa(70000/10);
-    planets[0]->setRadio(300/10);
+    planets[0]->setMasa(50000/10);
+    planets[0]->setRadio(200/10);
     planets[0]->setVelx(0);
     planets[0]->setVely(0);
     planets[0]->Tamanio();
@@ -100,18 +100,32 @@ void MainWindow::mover()
 void MainWindow::Aceleracion()
 {
     double acx=0,acy=0,dist=0;
+//    for(short pos=1;pos<planets.size();pos++){
+//        for(short pos2=0;pos2<planets.size();pos2++){
+//            if(pos!=pos2){
+//                dist = pow(planets[pos2]->getPosx()-planets[pos]->getPosx(),2);
+//                dist += pow(planets[pos2]->getPosy()-planets[pos]->getPosy(),2);
+//                dist = sqrt(dist);
+//                acx+=(planets[pos2]->getMasa()/pow(dist,3))*(planets[pos2]->getPosx()-planets[pos]->getPosx());
+//                acy+=(planets[pos2]->getMasa()/pow(dist,3))*(planets[pos2]->getPosy()-planets[pos]->getPosy());
+//            }
+//            qDebug() << "Distancia " << dist;
+//            dist = 0;
+//        }
+//        planets[pos]->setAc_x(acx);
+//        planets[pos]->setAc_y(acy);
+//        qDebug() << "ac x " << acx;
+//        qDebug() << "ac y " << acy;
+//        acx=0,acy=0;
+//    }
     for(short pos=1;pos<planets.size();pos++){
-        for(short pos2=0;pos2<planets.size();pos2++){
-            if(pos!=pos2){
-                dist = pow(planets[pos2]->getPosx()-planets[pos]->getPosx(),2);
-                dist += pow(planets[pos2]->getPosy()-planets[pos]->getPosy(),2);
-                dist = sqrt(dist);
-                acx+=(planets[pos2]->getMasa()/pow(dist,3))*(planets[pos2]->getPosx()-planets[pos]->getPosx());
-                acy+=(planets[pos2]->getMasa()/pow(dist,3))*(planets[pos2]->getPosy()-planets[pos]->getPosy());
-            }
-            qDebug() << "Distancia " << dist;
-            dist = 0;
-        }
+        dist = pow(planets[0]->getPosx()-planets[pos]->getPosx(),2);
+        dist += pow(planets[0]->getPosy()-planets[pos]->getPosy(),2);
+        dist = sqrt(dist);
+        acx+=(planets[0]->getMasa()/pow(dist,3))*(planets[0]->getPosx()-planets[pos]->getPosx());
+        acy+=(planets[0]->getMasa()/pow(dist,3))*(planets[0]->getPosy()-planets[pos]->getPosy());
+        qDebug() << "Distancia " << dist;
+        dist = 0;
         planets[pos]->setAc_x(acx);
         planets[pos]->setAc_y(acy);
         qDebug() << "ac x " << acx;
@@ -200,7 +214,7 @@ void MainWindow::Invisible()
 }
 void MainWindow::on_play_clicked()
 {
-    timer->start(10);
+    timer->start(50);
 }
 
 void MainWindow::on_stop_clicked()
