@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView_2->setVisible(false);
     Invisible();
+    ui->next->setVisible(false);
+    ui->back->setVisible(false);
+    ui->delete_->setVisible(false);
     //Sol
     Sun();
     //timer
@@ -136,6 +139,7 @@ void MainWindow::Aceleracion()
 
 void MainWindow::on_add_clicked()
 {
+    timer->stop();
     ui->graphicsView_2->setVisible(true);
     Visible();
 }
@@ -214,10 +218,30 @@ void MainWindow::Invisible()
 }
 void MainWindow::on_play_clicked()
 {
+    if(planets.size()==1)
+        QMessageBox::critical(this,"Error","Debe haber por lo menos un planeta diferente al sol para iniciar la simulacion.");
+    else
     timer->start(50);
 }
 
 void MainWindow::on_stop_clicked()
 {
     timer->stop();
+}
+
+void MainWindow::on_view_clicked()
+{
+    timer->stop();
+    ui->graphicsView_2->setVisible(true);
+    Visible();
+    ui->next->setVisible(true);
+    ui->back->setVisible(true);
+    ui->delete_->setVisible(true);
+    ui->posx->setValue(planets[0]->getPosx());
+    ui->posy->setValue(planets[0]->getPosy());
+    ui->masa->setValue(planets[0]->getMasa());
+    ui->radio->setValue(planets[0]->getRadio());
+    ui->velx->setValue(planets[0]->getVelx());
+    ui->vely->setValue(planets[0]->getVely());
+
 }
