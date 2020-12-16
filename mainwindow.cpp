@@ -77,8 +77,10 @@ void MainWindow::Sun()
     planets[0]->setVelx(0);
     planets[0]->setVely(0);
     planets[0]->Tamanio();
-    planets[0]->setPosx(500-planets[0]->getRadio());
-    planets[0]->setPosy(500-planets[0]->getRadio());
+    planets[0]->setX_inicial(500-planets[0]->getRadio());
+    planets[0]->setY_inicial(500-planets[0]->getRadio());
+    planets[0]->setPosx(planets[0]->getX_inicial());
+    planets[0]->setPosy(planets[0]->getY_inicial());
     scene->addItem(planets[0]);
     planets[0]->setPos(planets[0]->getPosx(),planets[0]->getPosy());
 }
@@ -139,42 +141,84 @@ void MainWindow::Aceleracion()
 
 void MainWindow::on_add_clicked()
 {
+    saveButton=true;
+
+    ui->posx->setReadOnly(false);
+    ui->posy->setReadOnly(false);
+    ui->velx->setReadOnly(false);
+    ui->vely->setReadOnly(false);
+
+    ui->masa->setValue(0);
+    ui->radio->setValue(0);
+    ui->velx->setValue(0);
+    ui->vely->setValue(0);
+    ui->posx->setValue(0);
+    ui->posy->setValue(0);
+
     timer->stop();
     ui->graphicsView_2->setVisible(true);
     Visible();
+
+    ui->next->setVisible(false);
+    ui->back->setVisible(false);
+    ui->delete_->setVisible(false);
+
 }
 void MainWindow::on_save_clicked()
 {
-    if(planets.size()==6){
-        QMessageBox::critical(this,"Error","No se pueden agregar más de 6 planetas.");
+    if(saveButton){
+        //entro en donde no debia
+        if(planets.size()==6){
+            QMessageBox::critical(this,"Error","No se pueden agregar más de 6 planetas.");
+            ui->graphicsView_2->setVisible(false);
+            Invisible();
+            return;
+        }
+        //agregar planeta
+        short pos;
+        CreatePlanet();
+        pos = planets.size()-1;
+        planets[pos]->setMasa(ui->masa->value()/10);
+        planets[pos]->setRadio(ui->radio->value()/10);
+        planets[pos]->setVelx(ui->velx->value());
+        planets[pos]->setVely(ui->vely->value());
+        planets[pos]->Tamanio();
+        planets[pos]->setX_inicial(500+(ui->posx->value()/10)-planets[pos]->getRadio());
+        planets[pos]->setY_inicial(500-(ui->posy->value()/10)-planets[pos]->getRadio());
+        planets[pos]->setPosx(planets[pos]->getX_inicial());
+        planets[pos]->setPosy(planets[pos]->getY_inicial());
+        scene->addItem(planets[pos]);
+        planets[pos]->setPos(planets[pos]->getPosx(),planets[pos]->getPosy());
+        //cerrar scena
         ui->graphicsView_2->setVisible(false);
         Invisible();
-        return;
     }
-    //agregar planeta
-    short pos;
-    CreatePlanet();
-    pos = planets.size()-1;
-    planets[pos]->setMasa(ui->masa->value()/10);
-    planets[pos]->setRadio(ui->radio->value()/10);
-    planets[pos]->setVelx(ui->velx->value());
-    planets[pos]->setVely(ui->vely->value());
-    planets[pos]->Tamanio();
-    planets[pos]->setPosx(500+(ui->posx->value()/10)-planets[pos]->getRadio());
-    planets[pos]->setPosy(500-(ui->posy->value()/10)-planets[pos]->getRadio());
-    scene->addItem(planets[pos]);
-    planets[pos]->setPos(planets[pos]->getPosx(),planets[pos]->getPosy());
-    //cerrar scena
-    ui->graphicsView_2->setVisible(false);
-    Invisible();
-    //aceleracion planetas
-    Aceleracion();
+
+    else{
+        //donde debia
+        planets[number]->setMasa(ui->masa->value()/10);
+        planets[number]->setRadio(ui->radio->value()/10);
+        planets[number]->setVelx(ui->velx->value());
+        planets[number]->setVely(ui->vely->value());
+        planets[number]->Tamanio();
+        planets[number]->setX_inicial(500+(ui->posx->value()/10)-planets[number]->getRadio());
+        planets[number]->setY_inicial(500-(ui->posy->value()/10)-planets[number]->getRadio());
+        planets[number]->setPosx(planets[number]->getX_inicial());
+        planets[number]->setPosy(planets[number]->getY_inicial());
+        planets[number]->setPos(planets[number]->getPosx(),planets[number]->getPosy());
+        //cerrar scena
+        on_pushButton_3_clicked();
+
+    }
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
     ui->graphicsView_2->setVisible(false);
     Invisible();
+    ui->next->setVisible(false);
+    ui->back->setVisible(false);
+    ui->delete_->setVisible(false);
 }
 
 void MainWindow::Visible()
@@ -218,10 +262,11 @@ void MainWindow::Invisible()
 }
 void MainWindow::on_play_clicked()
 {
-    if(planets.size()==1)
+    if(planets.size()==1){
         QMessageBox::critical(this,"Error","Debe haber por lo menos un planeta diferente al sol para iniciar la simulacion.");
-    else
-    timer->start(50);
+        return;
+    }
+    timer->start(30);
 }
 
 void MainWindow::on_stop_clicked()
@@ -231,17 +276,101 @@ void MainWindow::on_stop_clicked()
 
 void MainWindow::on_view_clicked()
 {
+    saveButton = false;
+
+    number = 0;
     timer->stop();
     ui->graphicsView_2->setVisible(true);
     Visible();
     ui->next->setVisible(true);
     ui->back->setVisible(true);
     ui->delete_->setVisible(true);
-    ui->posx->setValue(planets[0]->getPosx());
-    ui->posy->setValue(planets[0]->getPosy());
-    ui->masa->setValue(planets[0]->getMasa());
-    ui->radio->setValue(planets[0]->getRadio());
-    ui->velx->setValue(planets[0]->getVelx());
-    ui->vely->setValue(planets[0]->getVely());
+
+    if(number ==0){
+        ui->posx->setReadOnly(true);
+        ui->posy->setReadOnly(true);
+        ui->velx->setReadOnly(true);
+        ui->vely->setReadOnly(true);
+    }
+    else{
+        ui->posx->setReadOnly(false);
+        ui->posy->setReadOnly(false);
+        ui->velx->setReadOnly(false);
+        ui->vely->setReadOnly(false);
+    }
+
+    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*10);
+    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*10);
+    ui->masa->setValue(planets[number]->getMasa()*10);
+    ui->radio->setValue(planets[number]->getRadio()*10);
+    ui->velx->setValue(planets[number]->getVelx());
+    ui->vely->setValue(planets[number]->getVely());
+
+}
+
+void MainWindow::on_next_clicked()
+{
+    number ++;
+    if(number == planets.size()) number = 0;
+
+    if(number ==0){
+        ui->posx->setReadOnly(true);
+        ui->posy->setReadOnly(true);
+        ui->velx->setReadOnly(true);
+        ui->vely->setReadOnly(true);
+    }
+    else{
+        ui->posx->setReadOnly(false);
+        ui->posy->setReadOnly(false);
+        ui->velx->setReadOnly(false);
+        ui->vely->setReadOnly(false);
+    }
+
+    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*10);
+    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*10);
+    ui->masa->setValue(planets[number]->getMasa()*10);
+    ui->radio->setValue(planets[number]->getRadio()*10);
+    ui->velx->setValue(planets[number]->getVelx());
+    ui->vely->setValue(planets[number]->getVely());
+}
+
+void MainWindow::on_back_clicked()
+{
+    number --;
+    if(number == -1) number = planets.size()-1;
+
+    if(number ==0){
+        ui->posx->setReadOnly(true);
+        ui->posy->setReadOnly(true);
+        ui->velx->setReadOnly(true);
+        ui->vely->setReadOnly(true);
+    }
+    else{
+        ui->posx->setReadOnly(false);
+        ui->posy->setReadOnly(false);
+        ui->velx->setReadOnly(false);
+        ui->vely->setReadOnly(false);
+    }
+
+    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*10);
+    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*10);
+    ui->masa->setValue(planets[number]->getMasa()*10);
+    ui->radio->setValue(planets[number]->getRadio()*10);
+    ui->velx->setValue(planets[number]->getVelx());
+    ui->vely->setValue(planets[number]->getVely());
+}
+
+void MainWindow::on_delete__clicked()
+{
+    if(number==0){
+        QMessageBox::critical(this,"Error","No se puede eliminar el sol.");
+        return;
+    }
+    scene->removeItem(planets[number]);
+    delete planets[number];
+    planets.removeAt(number);
+    QMessageBox::warning(this,"Advertencia","Has eliminado un planeta.");
+
+    on_pushButton_3_clicked();
 
 }

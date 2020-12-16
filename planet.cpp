@@ -95,3 +95,23 @@ void Planet::setAc_y(double value)
 {
     ac_y = value;
 }
+
+double Planet::getX_inicial() const
+{
+    return x_inicial;
+}
+
+void Planet::setX_inicial(double value)
+{
+    x_inicial = value;
+}
+
+double Planet::getY_inicial() const
+{
+    return y_inicial;
+}
+
+void Planet::setY_inicial(double value)
+{
+    y_inicial = value;
+}

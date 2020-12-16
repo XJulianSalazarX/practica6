@@ -34,7 +34,8 @@ private:
     QList<Planet *> planets;
     double time = 1;
     QTimer *timer;
-
+    int number;
+    bool saveButton;
 public slots:
     void mover();
 
@@ -45,5 +46,8 @@ private slots:
     void on_play_clicked();
     void on_stop_clicked();
     void on_view_clicked();
+    void on_next_clicked();
+    void on_back_clicked();
+    void on_delete__clicked();
 };
 #endif // MAINWINDOW_H
