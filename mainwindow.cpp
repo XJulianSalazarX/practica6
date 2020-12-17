@@ -91,6 +91,7 @@ void MainWindow::Sun()
 void MainWindow::mover()
 {
     Aceleracion();
+
     for(short pos=1;pos<planets.size();pos++){
 
         planets[pos]->setVelx(planets[pos]->getVelx()+(planets[pos]->getAc_x()*time));
@@ -196,7 +197,7 @@ void MainWindow::on_save_clicked()
         planets[pos]->setMasa(ui->masa->value()/16);
         planets[pos]->setRadio(ui->radio->value()/16);
         planets[pos]->setVelx(ui->velx->value());
-        planets[pos]->setVely(ui->vely->value());
+        planets[pos]->setVely(ui->vely->value()*-1);
         planets[pos]->Tamanio();
         planets[pos]->setX_inicial(500+(ui->posx->value()/16)-planets[pos]->getRadio());
         planets[pos]->setY_inicial(500-(ui->posy->value()/16)-planets[pos]->getRadio());
@@ -214,7 +215,7 @@ void MainWindow::on_save_clicked()
         planets[number]->setMasa(ui->masa->value()/16);
         planets[number]->setRadio(ui->radio->value()/16);
         planets[number]->setVelx(ui->velx->value());
-        planets[number]->setVely(ui->vely->value());
+        planets[number]->setVely(ui->vely->value()*-1);
         planets[number]->Tamanio();
         planets[number]->setX_inicial(500+(ui->posx->value()/16)-planets[number]->getRadio());
         planets[number]->setY_inicial(500-(ui->posy->value()/16)-planets[number]->getRadio());
@@ -295,7 +296,7 @@ void MainWindow::on_play_clicked()
         QMessageBox::critical(this,"Error","Cierre la ventana abierta.");
         return;
     }
-    timer->start(500);
+    timer->start(10);
 }
 
 void MainWindow::on_stop_clicked()
@@ -337,7 +338,7 @@ void MainWindow::on_view_clicked()
     ui->masa->setValue(planets[number]->getMasa()*16);
     ui->radio->setValue(planets[number]->getRadio()*16);
     ui->velx->setValue(planets[number]->getVelx());
-    ui->vely->setValue(planets[number]->getVely());
+    ui->vely->setValue(planets[number]->getVely()*-1);
 
 }
 
@@ -364,7 +365,7 @@ void MainWindow::on_next_clicked()
     ui->masa->setValue(planets[number]->getMasa()*16);
     ui->radio->setValue(planets[number]->getRadio()*16);
     ui->velx->setValue(planets[number]->getVelx());
-    ui->vely->setValue(planets[number]->getVely());
+    ui->vely->setValue(planets[number]->getVely()*-1);
 }
 
 void MainWindow::on_back_clicked()
@@ -390,7 +391,7 @@ void MainWindow::on_back_clicked()
     ui->masa->setValue(planets[number]->getMasa()*16);
     ui->radio->setValue(planets[number]->getRadio()*16);
     ui->velx->setValue(planets[number]->getVelx());
-    ui->vely->setValue(planets[number]->getVely());
+    ui->vely->setValue(planets[number]->getVely()*-1);
 }
 
 void MainWindow::on_delete__clicked()
