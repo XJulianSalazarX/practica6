@@ -37,12 +37,14 @@ private:
     QList<Planet *> planets;
     double time = 1;
     QTimer *timer;
+    QTimer *timer2;
     int number;
     bool saveButton;
 
     QString file_name;
 public slots:
     void mover();
+    void Crear_archivo();
 
 private slots:
     void on_add_clicked();

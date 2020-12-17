@@ -1,16 +1,12 @@
 <RCC>
     <qresource prefix="/">
-        <file>imagenes/planet2.png</file>
-        <file>imagenes/planet3.png</file>
-        <file>imagenes/planet4.png</file>
-        <file>imagenes/planet5.png</file>
-        <file>imagenes/planet6.png</file>
         <file>imagenes/space.png</file>
-        <file>imagenes/sun.png</file>
-        <file>imagenes/sol.png</file>
-        <file>imagenes/plano.png</file>
-        <file>imagenes/plano 2.png</file>
-        <file>imagenes/cartesiano.png</file>
-        <file>imagenes/sun2.png</file>
+        <file>imagenes/sol2.png</file>
+        <file>imagenes/final.jpg</file>
+        <file>imagenes/german.png</file>
+        <file>imagenes/uk.png</file>
+        <file>imagenes/usa.png</file>
+        <file>imagenes/_spain.png</file>
+        <file>imagenes/_uruguay.png</file>
     </qresource>
 </RCC>

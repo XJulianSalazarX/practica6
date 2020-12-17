@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMinimumSize(width(),height());
     this->setMaximumSize(width(),height());
     scene = new QGraphicsScene();
-    scene->setBackgroundBrush(QPixmap(":/imagenes/cartesiano.png").scaled(1000,1000));
+    scene->setBackgroundBrush(QPixmap(":/imagenes/final.jpg").scaled(1000,1000));
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setFixedSize(1000,1000);
     ui->graphicsView->setSceneRect(0,0,1000,1000);
@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent)
     //timer
     timer = new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(mover()));
+
+    timer2=new QTimer();
+    connect(timer2,SIGNAL(timeout()),this,SLOT(Crear_archivo()));
 }
 
 MainWindow::~MainWindow()
@@ -47,20 +50,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::CreatePlanet()
 {
-    if(!planetName(":/imagenes/planet2.png")){
-        planets.push_back(new Planet(":/imagenes/planet2.png"));
+    if(!planetName(":/imagenes/_uruguay.png")){
+        planets.push_back(new Planet(":/imagenes/_uruguay.png"));
     }
-    else if(!planetName(":/imagenes/planet3.png")){
-        planets.push_back(new Planet(":/imagenes/planet3.png"));
+    else if(!planetName(":/imagenes/german.png")){
+        planets.push_back(new Planet(":/imagenes/german.png"));
     }
-    else if(!planetName(":/imagenes/planet4.png")){
-        planets.push_back(new Planet(":/imagenes/planet4.png"));
+    else if(!planetName(":/imagenes/_spain.png")){
+        planets.push_back(new Planet(":/imagenes/_spain.png"));
     }
-    else if(!planetName(":/imagenes/planet5.png")){
-        planets.push_back(new Planet(":/imagenes/planet5.png"));
+    else if(!planetName(":/imagenes/uk.png")){
+        planets.push_back(new Planet(":/imagenes/uk.png"));
     }
-    else if(!planetName(":/imagenes/planet6.png")){
-        planets.push_back(new Planet(":/imagenes/planet6.png"));
+    else if(!planetName(":/imagenes/usa.png")){
+        planets.push_back(new Planet(":/imagenes/usa.png"));
     }
 }
 
@@ -74,9 +77,9 @@ bool MainWindow::planetName(QString name)
 
 void MainWindow::Sun()
 {
-    planets.push_back(new Planet(":/imagenes/sun2.png"));
+    planets.push_back(new Planet(":/imagenes/sol2.png"));
     planets[0]->setMasa(70000/16);
-    planets[0]->setRadio(18.75);
+    planets[0]->setRadio(300/10);
     planets[0]->setVelx(0);
     planets[0]->setVely(0);
     planets[0]->Tamanio();
@@ -99,13 +102,27 @@ void MainWindow::mover()
         planets[pos]->setPosx(planets[pos]->getPosx()+(planets[pos]->getVelx()*time));
         planets[pos]->setPosy(planets[pos]->getPosy()+(planets[pos]->getVely()*time));
 
-        qDebug() << "velx: " << planets[pos]->getVelx();
-        qDebug() << "vely: " << planets[pos]->getVely();
-        qDebug() << "Posx: " << planets[pos]->getPosx();
-        qDebug() << "Posy: " << planets[pos]->getPosy();
-
         planets[pos]->setPos(planets[pos]->getPosx(),planets[pos]->getPosy());
     }
+}
+
+void MainWindow::Crear_archivo()
+{
+    QFile file(file_name);
+    if(!file.open(QIODevice::Append | QIODevice::Text)){
+        QMessageBox::critical(this,"Error","archivo no encontrado.");
+        return;
+    }
+
+    QTextStream Write(&file);
+
+    for(short pos=1;pos<planets.size();pos++){
+        Write<<(int (planets[pos]->getRadio()+planets[pos]->getPosx()-500)*16)<<'\t' <<int (((500-planets[pos]->getPosy()+planets[pos]->getRadio())*16)*(-1))<<'\t';
+    }
+    Write<<'\n';
+
+    file.flush();
+    file.close();
 }
 
 void MainWindow::Aceleracion()
@@ -136,12 +153,11 @@ void MainWindow::Aceleracion()
         dist = sqrt(dist);
         acx+=(planets[0]->getMasa()/pow(dist,3))*(planets[0]->getPosx()-planets[pos]->getPosx());
         acy+=(planets[0]->getMasa()/pow(dist,3))*(planets[0]->getPosy()-planets[pos]->getPosy());
-        qDebug() << "Distancia " << dist;
+
         dist = 0;
         planets[pos]->setAc_x(acx);
         planets[pos]->setAc_y(acy);
-        qDebug() << "ac x " << acx;
-        qDebug() << "ac y " << acy;
+
         acx=0,acy=0;
     }
 }
@@ -168,6 +184,7 @@ void MainWindow::on_add_clicked()
     ui->posy->setValue(0);
 
     timer->stop();
+    timer2->stop();
     ui->graphicsView_2->setVisible(true);
     Visible();
 
@@ -195,7 +212,7 @@ void MainWindow::on_save_clicked()
         CreatePlanet();
         pos = planets.size()-1;
         planets[pos]->setMasa(ui->masa->value()/16);
-        planets[pos]->setRadio(ui->radio->value()/16);
+        planets[pos]->setRadio(ui->radio->value()/10);
         planets[pos]->setVelx(ui->velx->value());
         planets[pos]->setVely(ui->vely->value()*-1);
         planets[pos]->Tamanio();
@@ -213,7 +230,7 @@ void MainWindow::on_save_clicked()
     else{
         //donde debia
         planets[number]->setMasa(ui->masa->value()/16);
-        planets[number]->setRadio(ui->radio->value()/16);
+        planets[number]->setRadio(ui->radio->value()/10);
         planets[number]->setVelx(ui->velx->value());
         planets[number]->setVely(ui->vely->value()*-1);
         planets[number]->Tamanio();
@@ -297,11 +314,13 @@ void MainWindow::on_play_clicked()
         return;
     }
     timer->start(10);
+    timer2->start(100);
 }
 
 void MainWindow::on_stop_clicked()
 {
     timer->stop();
+    timer2->stop();
 }
 
 void MainWindow::on_view_clicked()
@@ -314,6 +333,7 @@ void MainWindow::on_view_clicked()
 
     number = 0;
     timer->stop();
+    timer2->stop();
     ui->graphicsView_2->setVisible(true);
     Visible();
     ui->next->setVisible(true);
@@ -336,7 +356,7 @@ void MainWindow::on_view_clicked()
     ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*16);
     ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*16);
     ui->masa->setValue(planets[number]->getMasa()*16);
-    ui->radio->setValue(planets[number]->getRadio()*16);
+    ui->radio->setValue(planets[number]->getRadio()*10);
     ui->velx->setValue(planets[number]->getVelx());
     ui->vely->setValue(planets[number]->getVely()*-1);
 
@@ -363,7 +383,7 @@ void MainWindow::on_next_clicked()
     ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*16);
     ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*16);
     ui->masa->setValue(planets[number]->getMasa()*16);
-    ui->radio->setValue(planets[number]->getRadio()*16);
+    ui->radio->setValue(planets[number]->getRadio()*10);
     ui->velx->setValue(planets[number]->getVelx());
     ui->vely->setValue(planets[number]->getVely()*-1);
 }
@@ -389,7 +409,7 @@ void MainWindow::on_back_clicked()
     ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*16);
     ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*16);
     ui->masa->setValue(planets[number]->getMasa()*16);
-    ui->radio->setValue(planets[number]->getRadio()*16);
+    ui->radio->setValue(planets[number]->getRadio()*10);
     ui->velx->setValue(planets[number]->getVelx());
     ui->vely->setValue(planets[number]->getVely()*-1);
 }
@@ -424,6 +444,17 @@ void MainWindow::on_ok_clicked()
         QMessageBox::critical(this,"Error","Ingrese un nombre valido.");
         return;
     }
+
+    QTextStream Write(&file);
+     for (int pl=1;pl<=5 ;pl++ ) {
+        Write<<"planeta "<<pl<<'\t';
+    }
+    Write<<'\n';
+
+    for (int pl=1;pl<=5 ;pl++ ) {
+        Write<<"x"<<'\t'<<"y"<<'\t';
+    }
+    Write<<'\n';
     file.flush();
     file.close();
 
@@ -432,5 +463,4 @@ void MainWindow::on_ok_clicked()
 
     ui->graphicsView->setVisible(true);
     ui->graphicsView_2->setVisible(false);
-
 }
