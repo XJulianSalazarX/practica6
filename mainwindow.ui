@@ -107,35 +107,57 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Radio:</string>
+     <item row="2" column="2">
+      <widget class="QDoubleSpinBox" name="masa">
+       <property name="minimum">
+        <double>20.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>100000.000000000000000</double>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
+       </property>
        <property name="text">
         <string>Posicion X:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="1" column="1">
       <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
+       </property>
        <property name="text">
         <string>Posicion Y:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Vel X:</string>
+     <item row="2" column="4">
+      <widget class="QDoubleSpinBox" name="velx">
+       <property name="minimum">
+        <double>-1000000000000000013946113804119924437974165856986638331112094170909680489426130543638408513078605724209795153399497011464465488473637220910340574757582946907032347746826714825234078949864321840610832155574248213693581484614981956096327942144.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>100000000000000001097906362944045541740492309677311846336810682903157585404911491537163328978494688899061249669721172515611590283743140088328307009198146046031271664502933027185697489699588559043338384466165001178426897626212945177628091195786707458122783970171784415105291802893207873272974885715430223118336.000000000000000</double>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="posy">
+       <property name="minimum">
+        <double>-8000.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>8000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
       <widget class="QDoubleSpinBox" name="posx">
        <property name="minimum">
         <double>-8000.000000000000000</double>
@@ -148,24 +170,27 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
-      <widget class="QDoubleSpinBox" name="velx">
-       <property name="minimum">
-        <double>-1000000000000000013946113804119924437974165856986638331112094170909680489426130543638408513078605724209795153399497011464465488473637220910340574757582946907032347746826714825234078949864321840610832155574248213693581484614981956096327942144.000000000000000</double>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
        </property>
-       <property name="maximum">
-        <double>100000000000000001097906362944045541740492309677311846336810682903157585404911491537163328978494688899061249669721172515611590283743140088328307009198146046031271664502933027185697489699588559043338384466165001178426897626212945177628091195786707458122783970171784415105291802893207873272974885715430223118336.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Vel y:</string>
+        <string>Masa:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="3">
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Radio:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
       <widget class="QDoubleSpinBox" name="radio">
        <property name="minimum">
         <double>100.000000000000000</double>
@@ -175,17 +200,17 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QDoubleSpinBox" name="posy">
-       <property name="minimum">
-        <double>-8000.000000000000000</double>
+     <item row="1" column="5">
+      <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
        </property>
-       <property name="maximum">
-        <double>8000.000000000000000</double>
+       <property name="text">
+        <string>Vel y:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="5">
+     <item row="2" column="5">
       <widget class="QDoubleSpinBox" name="vely">
        <property name="readOnly">
         <bool>false</bool>
@@ -207,20 +232,23 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <widget class="QDoubleSpinBox" name="masa">
-       <property name="minimum">
-        <double>20.000000000000000</double>
+     <item row="1" column="4">
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
        </property>
-       <property name="maximum">
-        <double>100000.000000000000000</double>
+       <property name="text">
+        <string>Vel X:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_3">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="styleSheet">
+        <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
+       </property>
        <property name="text">
-        <string>Masa:</string>
+        <string>TextLabel</string>
        </property>
       </widget>
      </item>
@@ -281,16 +309,19 @@
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>239</y>
-      <width>280</width>
-      <height>91</height>
+      <x>280</x>
+      <y>230</y>
+      <width>401</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
     <widget class="QLabel" name="label_7">
+     <property name="styleSheet">
+      <string notr="true">font: 8pt &quot;8514oem&quot;;</string>
+     </property>
      <property name="text">
       <string>Ingrese nombre del archivo txt donde
 guardar las posciones de los planetas:

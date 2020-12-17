@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView_2->setScene(scene2);
     ui->graphicsView_2->setFixedSize(900,300);
     ui->graphicsView_2->setSceneRect(0,0,800,300);
+    scene2->setBackgroundBrush(QPixmap(":/imagenes/blanco.jpg").scaled(800,300));
     ui->graphicsView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView_2->setVisible(true);
@@ -169,6 +170,8 @@ void MainWindow::on_add_clicked()
         return;
     }
 
+    ui->label_8->setText("Agregar planeta.");
+
     saveButton=true;
 
     ui->posx->setReadOnly(false);
@@ -268,6 +271,7 @@ void MainWindow::Visible()
     ui->label_4->setVisible(true);
     ui->label_5->setVisible(true);
     ui->label_6->setVisible(true);
+    ui->label_8->setVisible(true);
     //spin box
     ui->posx->setVisible(true);
     ui->posy->setVisible(true);
@@ -288,6 +292,7 @@ void MainWindow::Invisible()
     ui->label_4->setVisible(false);
     ui->label_5->setVisible(false);
     ui->label_6->setVisible(false);
+    ui->label_8->setVisible(false);
     //spin box
     ui->posx->setVisible(false);
     ui->posy->setVisible(false);
@@ -325,6 +330,8 @@ void MainWindow::on_stop_clicked()
 
 void MainWindow::on_view_clicked()
 {
+    ui->label_8->setText("SUN");
+
     if(ui->ok->isVisible()){
         QMessageBox::critical(this,"Error","Ingrese nombre del archivo para continuar");
         return;
@@ -367,13 +374,18 @@ void MainWindow::on_next_clicked()
     number ++;
     if(number == planets.size()) number = 0;
 
+
     if(number ==0){
+        ui->label_8->setText("SUN");
+
         ui->posx->setReadOnly(true);
         ui->posy->setReadOnly(true);
         ui->velx->setReadOnly(true);
         ui->vely->setReadOnly(true);
     }
     else{
+        ui->label_8->setText("PLANETA " + QString(number+48));
+
         ui->posx->setReadOnly(false);
         ui->posy->setReadOnly(false);
         ui->velx->setReadOnly(false);
@@ -394,12 +406,16 @@ void MainWindow::on_back_clicked()
     if(number == -1) number = planets.size()-1;
 
     if(number ==0){
+        ui->label_8->setText("SUN");
+
         ui->posx->setReadOnly(true);
         ui->posy->setReadOnly(true);
         ui->velx->setReadOnly(true);
         ui->vely->setReadOnly(true);
     }
     else{
+        ui->label_8->setText("PLANETA " + QString(number+48));
+
         ui->posx->setReadOnly(false);
         ui->posy->setReadOnly(false);
         ui->velx->setReadOnly(false);

@@ -8,5 +8,6 @@
         <file>imagenes/usa.png</file>
         <file>imagenes/_spain.png</file>
         <file>imagenes/_uruguay.png</file>
+        <file>imagenes/blanco.jpg</file>
     </qresource>
 </RCC>
