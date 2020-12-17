@@ -27,6 +27,8 @@ public:
     void Invisible();
     void Aceleracion();
 
+    void Imprimir();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;

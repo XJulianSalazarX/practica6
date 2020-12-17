@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMinimumSize(width(),height());
     this->setMaximumSize(width(),height());
     scene = new QGraphicsScene();
-    scene->setBackgroundBrush(QPixmap(":/imagenes/plano.png").scaled(1000,1000));
+    scene->setBackgroundBrush(QPixmap(":/imagenes/cartesiano.png").scaled(1000,1000));
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setFixedSize(1000,1000);
     ui->graphicsView->setSceneRect(0,0,1000,1000);
@@ -72,8 +72,8 @@ bool MainWindow::planetName(QString name)
 void MainWindow::Sun()
 {
     planets.push_back(new Planet(":/imagenes/sol.png"));
-    planets[0]->setMasa(50000/10);
-    planets[0]->setRadio(200/10);
+    planets[0]->setMasa(70000/16);
+    planets[0]->setRadio(18.75);
     planets[0]->setVelx(0);
     planets[0]->setVely(0);
     planets[0]->Tamanio();
@@ -123,6 +123,7 @@ void MainWindow::Aceleracion()
 //        qDebug() << "ac y " << acy;
 //        acx=0,acy=0;
 //    }
+
     for(short pos=1;pos<planets.size();pos++){
         dist = pow(planets[0]->getPosx()-planets[pos]->getPosx(),2);
         dist += pow(planets[0]->getPosy()-planets[pos]->getPosy(),2);
@@ -178,13 +179,13 @@ void MainWindow::on_save_clicked()
         short pos;
         CreatePlanet();
         pos = planets.size()-1;
-        planets[pos]->setMasa(ui->masa->value()/10);
-        planets[pos]->setRadio(ui->radio->value()/10);
+        planets[pos]->setMasa(ui->masa->value()/16);
+        planets[pos]->setRadio(ui->radio->value()/16);
         planets[pos]->setVelx(ui->velx->value());
         planets[pos]->setVely(ui->vely->value());
         planets[pos]->Tamanio();
-        planets[pos]->setX_inicial(500+(ui->posx->value()/10)-planets[pos]->getRadio());
-        planets[pos]->setY_inicial(500-(ui->posy->value()/10)-planets[pos]->getRadio());
+        planets[pos]->setX_inicial(500+(ui->posx->value()/16)-planets[pos]->getRadio());
+        planets[pos]->setY_inicial(500-(ui->posy->value()/16)-planets[pos]->getRadio());
         planets[pos]->setPosx(planets[pos]->getX_inicial());
         planets[pos]->setPosy(planets[pos]->getY_inicial());
         scene->addItem(planets[pos]);
@@ -196,13 +197,13 @@ void MainWindow::on_save_clicked()
 
     else{
         //donde debia
-        planets[number]->setMasa(ui->masa->value()/10);
-        planets[number]->setRadio(ui->radio->value()/10);
+        planets[number]->setMasa(ui->masa->value()/16);
+        planets[number]->setRadio(ui->radio->value()/16);
         planets[number]->setVelx(ui->velx->value());
         planets[number]->setVely(ui->vely->value());
         planets[number]->Tamanio();
-        planets[number]->setX_inicial(500+(ui->posx->value()/10)-planets[number]->getRadio());
-        planets[number]->setY_inicial(500-(ui->posy->value()/10)-planets[number]->getRadio());
+        planets[number]->setX_inicial(500+(ui->posx->value()/16)-planets[number]->getRadio());
+        planets[number]->setY_inicial(500-(ui->posy->value()/16)-planets[number]->getRadio());
         planets[number]->setPosx(planets[number]->getX_inicial());
         planets[number]->setPosy(planets[number]->getY_inicial());
         planets[number]->setPos(planets[number]->getPosx(),planets[number]->getPosy());
@@ -210,6 +211,7 @@ void MainWindow::on_save_clicked()
         on_pushButton_3_clicked();
 
     }
+    Aceleracion();
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -299,10 +301,10 @@ void MainWindow::on_view_clicked()
         ui->vely->setReadOnly(false);
     }
 
-    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*10);
-    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*10);
-    ui->masa->setValue(planets[number]->getMasa()*10);
-    ui->radio->setValue(planets[number]->getRadio()*10);
+    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*16);
+    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*16);
+    ui->masa->setValue(planets[number]->getMasa()*16);
+    ui->radio->setValue(planets[number]->getRadio()*16);
     ui->velx->setValue(planets[number]->getVelx());
     ui->vely->setValue(planets[number]->getVely());
 
@@ -326,10 +328,10 @@ void MainWindow::on_next_clicked()
         ui->vely->setReadOnly(false);
     }
 
-    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*10);
-    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*10);
-    ui->masa->setValue(planets[number]->getMasa()*10);
-    ui->radio->setValue(planets[number]->getRadio()*10);
+    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*16);
+    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*16);
+    ui->masa->setValue(planets[number]->getMasa()*16);
+    ui->radio->setValue(planets[number]->getRadio()*16);
     ui->velx->setValue(planets[number]->getVelx());
     ui->vely->setValue(planets[number]->getVely());
 }
@@ -352,10 +354,10 @@ void MainWindow::on_back_clicked()
         ui->vely->setReadOnly(false);
     }
 
-    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*10);
-    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*10);
-    ui->masa->setValue(planets[number]->getMasa()*10);
-    ui->radio->setValue(planets[number]->getRadio()*10);
+    ui->posx->setValue((planets[number]->getX_inicial()+planets[number]->getRadio()-500)*16);
+    ui->posy->setValue((500-(planets[number]->getY_inicial()+planets[number]->getRadio()))*16);
+    ui->masa->setValue(planets[number]->getMasa()*16);
+    ui->radio->setValue(planets[number]->getRadio()*16);
     ui->velx->setValue(planets[number]->getVelx());
     ui->vely->setValue(planets[number]->getVely());
 }
@@ -374,3 +376,5 @@ void MainWindow::on_delete__clicked()
     on_pushButton_3_clicked();
 
 }
+
+
