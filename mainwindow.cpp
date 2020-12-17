@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setSceneRect(0,0,1000,1000);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVisible(false);
     //escena entrada de datos
     scene2 = new QGraphicsScene();
     ui->graphicsView_2->setScene(scene2);
@@ -25,8 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView_2->setSceneRect(0,0,800,300);
     ui->graphicsView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView_2->setVisible(false);
+    ui->graphicsView_2->setVisible(true);
     Invisible();
+    ui->splitter->setVisible(true);
+    ui->splitter->setGeometry(300,50,ui->splitter->width(),ui->splitter->height());
     ui->next->setVisible(false);
     ui->back->setVisible(false);
     ui->delete_->setVisible(false);
@@ -71,7 +74,7 @@ bool MainWindow::planetName(QString name)
 
 void MainWindow::Sun()
 {
-    planets.push_back(new Planet(":/imagenes/sol.png"));
+    planets.push_back(new Planet(":/imagenes/sun2.png"));
     planets[0]->setMasa(70000/16);
     planets[0]->setRadio(18.75);
     planets[0]->setVelx(0);
@@ -89,15 +92,17 @@ void MainWindow::mover()
 {
     Aceleracion();
     for(short pos=1;pos<planets.size();pos++){
-        qDebug() << "Entro en el for";
+
         planets[pos]->setVelx(planets[pos]->getVelx()+(planets[pos]->getAc_x()*time));
         planets[pos]->setVely(planets[pos]->getVely()+(planets[pos]->getAc_y()*time));
         planets[pos]->setPosx(planets[pos]->getPosx()+(planets[pos]->getVelx()*time));
         planets[pos]->setPosy(planets[pos]->getPosy()+(planets[pos]->getVely()*time));
-        qDebug() << planets[pos]->getVelx();
-        qDebug() << planets[pos]->getVely();
+
+        qDebug() << "velx: " << planets[pos]->getVelx();
+        qDebug() << "vely: " << planets[pos]->getVely();
         qDebug() << "Posx: " << planets[pos]->getPosx();
         qDebug() << "Posy: " << planets[pos]->getPosy();
+
         planets[pos]->setPos(planets[pos]->getPosx(),planets[pos]->getPosy());
     }
 }
@@ -142,6 +147,11 @@ void MainWindow::Aceleracion()
 
 void MainWindow::on_add_clicked()
 {
+    if(ui->ok->isVisible()){
+        QMessageBox::critical(this,"Error","Ingrese nombre del archivo para continuar");
+        return;
+    }
+
     saveButton=true;
 
     ui->posx->setReadOnly(false);
@@ -167,6 +177,10 @@ void MainWindow::on_add_clicked()
 }
 void MainWindow::on_save_clicked()
 {
+    if(ui->ok->isVisible()){
+        QMessageBox::critical(this,"Error","Ingrese nombre del archivo para continuar");
+        return;
+    }
     if(saveButton){
         //entro en donde no debia
         if(planets.size()==6){
@@ -216,6 +230,10 @@ void MainWindow::on_save_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    if(ui->ok->isVisible()){
+        QMessageBox::critical(this,"Error","Ingrese nombre del archivo para continuar");
+        return;
+    }
     ui->graphicsView_2->setVisible(false);
     Invisible();
     ui->next->setVisible(false);
@@ -264,11 +282,20 @@ void MainWindow::Invisible()
 }
 void MainWindow::on_play_clicked()
 {
+    if(ui->ok->isVisible()){
+        QMessageBox::critical(this,"Error","Ingrese nombre del archivo para continuar");
+        return;
+    }
+
     if(planets.size()==1){
         QMessageBox::critical(this,"Error","Debe haber por lo menos un planeta diferente al sol para iniciar la simulacion.");
         return;
     }
-    timer->start(30);
+    else if(ui->graphicsView_2->isVisible()){
+        QMessageBox::critical(this,"Error","Cierre la ventana abierta.");
+        return;
+    }
+    timer->start(500);
 }
 
 void MainWindow::on_stop_clicked()
@@ -278,6 +305,10 @@ void MainWindow::on_stop_clicked()
 
 void MainWindow::on_view_clicked()
 {
+    if(ui->ok->isVisible()){
+        QMessageBox::critical(this,"Error","Ingrese nombre del archivo para continuar");
+        return;
+    }
     saveButton = false;
 
     number = 0;
@@ -377,4 +408,28 @@ void MainWindow::on_delete__clicked()
 
 }
 
+void MainWindow::on_ok_clicked()
+{
+    file_name = ui->lineEdit->text();
 
+
+    if(file_name.isEmpty() or file_name.mid(file_name.size()-4)!=".txt"){
+        QMessageBox::critical(this,"Error","Ingrese nombre del archivo, debe terminar en .txt.");
+        return;
+    }
+
+    QFile file(file_name);
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QMessageBox::critical(this,"Error","Ingrese un nombre valido.");
+        return;
+    }
+    file.flush();
+    file.close();
+
+    ui->ok->setVisible(false);
+    ui->splitter->setVisible(false);
+
+    ui->graphicsView->setVisible(true);
+    ui->graphicsView_2->setVisible(false);
+
+}

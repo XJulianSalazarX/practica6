@@ -9,8 +9,8 @@
         <file>imagenes/sun.png</file>
         <file>imagenes/sol.png</file>
         <file>imagenes/plano.png</file>
-        <file>posiciones/datos.txt</file>
         <file>imagenes/plano 2.png</file>
         <file>imagenes/cartesiano.png</file>
+        <file>imagenes/sun2.png</file>
     </qresource>
 </RCC>

@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QDebug>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -38,6 +39,8 @@ private:
     QTimer *timer;
     int number;
     bool saveButton;
+
+    QString file_name;
 public slots:
     void mover();
 
@@ -51,5 +54,6 @@ private slots:
     void on_next_clicked();
     void on_back_clicked();
     void on_delete__clicked();
+    void on_ok_clicked();
 };
 #endif // MAINWINDOW_H
